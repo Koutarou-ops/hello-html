@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>大学生のための Claude Code 8週間学習プラン</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 24px 16px 48px;
+      background-color: #f5f8fc;
+      color: #222222;
+      font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif;
+      line-height: 1.7;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 32px;
+      padding-bottom: 12px;
+      border-bottom: 4px solid #1565c0;
+      color: #0d47a1;
+      font-size: 28px;
+    }
+
+    h2 {
+      margin: 40px 0 12px;
+      color: #0d47a1;
+      font-size: 22px;
+    }
+
+    h3 {
+      margin: 24px 0 8px;
+      font-size: 17px;
+    }
+
+    /* 表：角を丸くし、見出しは青・行は白にして、マスを線で区切る */
+    table {
+      width: 100%;
+      margin: 8px 0 16px;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #90b4de;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      border-right: 1px solid #90b4de;
+      border-bottom: 1px solid #90b4de;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th:last-child,
+    td:last-child {
+      border-right: none;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    th {
+      background-color: #1565c0;
+      color: #ffffff;
+    }
+
+    td {
+      background-color: #ffffff;
+    }
+
+    /* 全体スケジュールの表：週の列は中央ぞろえ */
+    .schedule th:first-child,
+    .schedule td:first-child {
+      text-align: center;
+    }
+
+    /* 「やること」表の「完了」の列 */
+    .done {
+      width: 64px;
+      text-align: center;
+    }
+
+    /* 各週のカード：「はじめに」のカードと同じ、角丸の白い箱＋うっすら影 */
+    .week {
+      margin: 32px 0;
+      padding: 8px 28px 20px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .week h2 {
+      margin-top: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1565c0;
+      font-size: 26px;
+    }
+
+    /* 学習目標・やること などの見出し：青色の太字 */
+    .week h3 {
+      color: #0d47a1;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    /* 箇条書き：黒丸の代わりに、青の丸の中に番号を出す */
+    .week ul {
+      margin: 8px 0 16px;
+      padding: 0 0 0 16px;
+      list-style: none;
+      counter-reset: item;
+    }
+
+    .week li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 6px 0;
+      counter-increment: item;
+    }
+
+    .week li::before {
+      content: counter(item);
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background-color: #1565c0;
+      color: #ffffff;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 28px;
+      text-align: center;
+    }
+
+    /* 指示例・フォルダ構成図・テンプレートの枠 */
+    pre {
+      margin: 8px 0 16px;
+      padding: 12px 16px;
+      overflow-x: auto;
+      background-color: #f1f1f1;
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      font-family: "Consolas", "BIZ UDGothic", monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    code {
+      padding: 1px 4px;
+      background-color: #eeeeee;
+      border-radius: 4px;
+      font-family: "Consolas", "BIZ UDGothic", monospace;
+      font-size: 0.95em;
+    }
+
+    pre code {
+      padding: 0;
+      background-color: transparent;
+    }
+
+    /* 「はじめに」「全体スケジュール」の見出し：大きく・太く */
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    /* 「はじめに」のカード：角丸の白い箱＋うっすら影 */
+    .card {
+      margin: 16px 0 24px;
+      padding: 24px 28px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      color: #0d47a1;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .card p {
+      margin: 0;
+    }
+
+    .card .card-lead {
+      margin-bottom: 16px;
+      color: #555555;
+    }
+
+    /* 番号つきの項目（見出し1行＋説明文） */
+    .item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 10px 0;
+    }
+
+    .item-line + .item-line {
+      border-top: 1px solid #e3eaf3;
+    }
+
+    .num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      margin-top: 1px;
+      background-color: #1565c0;
+      color: #ffffff;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 28px;
+      text-align: center;
+    }
+
+    .item-title {
+      font-weight: bold;
+    }
+
+    .item-text {
+      color: #555555;
+      font-size: 15px;
+    }
+
+    /* 時間の目安 */
+    .time-label {
+      color: #555555;
+    }
+
+    .time-big {
+      color: #1565c0;
+      font-size: 27px;
+      font-weight: bold;
+      line-height: 1.3;
+    }
+
+    .card .time-note {
+      margin-bottom: 20px;
+      color: #555555;
+      font-size: 15px;
+    }
+
+    .halves {
+      display: flex;
+      gap: 12px;
+    }
+
+    .half {
+      flex: 1;
+      padding: 14px 16px;
+      background-color: #e3f2fd;
+      border-radius: 10px;
+    }
+
+    .half-title {
+      color: #1565c0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .half-text {
+      font-weight: bold;
+    }
+
+    /* 幅が狭い画面（スマホなど）では前半・後半を縦に並べる */
+    @media (max-width: 560px) {
+      .card,
+      .week {
+        padding: 20px;
+      }
+
+      .halves {
+        flex-direction: column;
+      }
+    }
+
+    .point {
+      margin: 16px 0;
+      padding: 12px 16px;
+      background-color: #e3f2fd;
+      border-left: 4px solid #1565c0;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>大学生のための Claude Code 8週間学習プラン</h1>
+
+    <!-- はじめに -->
+    <section>
+      <h2 class="section-title">はじめに</h2>
+
+      <!-- カード1：ゴール -->
+      <div class="card">
+        <h3>この学習プランのゴール</h3>
+        <p class="card-lead">8週間後に、次の3つができている状態を目指します。</p>
+        <div class="item">
+          <span class="num">1</span>
+          <div>
+            <p class="item-title">Claude Code を使いこなせる</p>
+            <p class="item-text">指示の出し方、変更の確認、GitHub との連携を自分でできる</p>
+          </div>
+        </div>
+        <div class="item">
+          <span class="num">2</span>
+          <div>
+            <p class="item-title">自分の成果物が公開されている</p>
+            <p class="item-text">毎週の成果物が GitHub に、Web アプリが URL で公開されている</p>
+          </div>
+        </div>
+        <div class="item">
+          <span class="num">3</span>
+          <div>
+            <p class="item-title">インターンに応募できる</p>
+            <p class="item-text">GitHub・README・ポートフォリオを揃え、面接で「何を作り、AI とどう協力し、自分が何を判断したか」を話せる</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- カード2：時間の目安 -->
+      <div class="card">
+        <h3>時間の目安</h3>
+        <p class="time-label">1週あたり</p>
+        <p class="time-big">約10時間</p>
+        <p class="time-note">平日1時間 × 5日 ＋ 週末5時間 など</p>
+        <div class="halves">
+          <div class="half">
+            <p class="half-title">前半4週</p>
+            <p class="half-text">Claude Code に慣れる</p>
+          </div>
+          <div class="half">
+            <p class="half-title">後半4週</p>
+            <p class="half-text">ポートフォリオアプリを作る</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- カード3：進め方の4つの原則 -->
+      <div class="card">
+        <h3>進め方の4つの原則</h3>
+        <div class="item item-line">
+          <span class="num">1</span>
+          <div>
+            <p class="item-title">読んで説明できるコードだけを残す。</p>
+            <p class="item-text">Claude が書いたコードでも、あなたが説明できなければ面接で困ります。分からない箇所は「この部分を初心者向けに説明して」と聞きましょう。</p>
+          </div>
+        </div>
+        <div class="item item-line">
+          <span class="num">2</span>
+          <div>
+            <p class="item-title">小さく頼んで、すぐ確かめる。</p>
+            <p class="item-text">「アプリ全部作って」ではなく「ログイン画面だけ作って」→ 動作確認 → 保存（コミット）を繰り返します。</p>
+          </div>
+        </div>
+        <div class="item item-line">
+          <span class="num">3</span>
+          <div>
+            <p class="item-title">承認ボタンを読まずに押さない。</p>
+            <p class="item-text">Claude がファイルを変更したりコマンドを実行する前に確認が出ます。何をしようとしているか必ず読みましょう。</p>
+          </div>
+        </div>
+        <div class="item item-line">
+          <span class="num">4</span>
+          <div>
+            <p class="item-title">作ったものは毎週 GitHub に公開する。</p>
+            <p class="item-text">採用担当者はコードだけでなく、コミット履歴から成長の過程も見ます。API キーなどの秘密情報は公開しないこと。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 全体スケジュール -->
+    <section>
+      <h2 class="section-title">全体スケジュール</h2>
+      <p>毎週の終わりに、その週の成果物を GitHub に push して公開します。第1〜2週の分は、第3週で GitHub の使い方を覚えたときにまとめて公開します。</p>
+      <table class="schedule">
+        <tr>
+          <th>週</th>
+          <th>テーマ</th>
+          <th>その週の成果物</th>
+        </tr>
+        <tr><td>1</td><td>準備と最初の対話</td><td>簡単な HTML ページ</td></tr>
+        <tr><td>2</td><td>基本操作と指示の出し方</td><td>小さな Web ツール（割り勘計算など）</td></tr>
+        <tr><td>3</td><td>GitHub 連携と CLAUDE.md</td><td>GitHub の公開リポジトリ</td></tr>
+        <tr><td>4</td><td>Web アプリの基礎と公開</td><td>URL で見られる自己紹介サイト</td></tr>
+        <tr><td>5</td><td>ポートフォリオアプリの企画・設計</td><td>仕様書 <code>docs/spec.md</code> と画面ラフ</td></tr>
+        <tr><td>6</td><td>実装①：主要機能</td><td>主要機能が動く版</td></tr>
+        <tr><td>7</td><td>実装②：品質を上げる</td><td>公開済みの完成版</td></tr>
+        <tr><td>8</td><td>仕上げと応募準備</td><td>応募パッケージ一式</td></tr>
+      </table>
+    </section>
+
+    <!-- 第1週 -->
+    <section class="week">
+      <h2>第1週：準備と最初の対話</h2>
+
+      <h3>学習目標</h3>
+      <ul>
+        <li>デスクトップアプリの Code タブでプロジェクトを開き、Claude と会話できる</li>
+        <li>「権限確認」の意味を理解する</li>
+      </ul>
+
+      <h3>最初にフォルダ構成を作る</h3>
+      <p>8週間の成果物を 1 か所にまとめるため、最初のセッションで次の構成を Claude に作ってもらいます。</p>
+<pre><code>claude-learning/
+├── CLAUDE.md        ← 全プロジェクト共通のルール
+├── plan/            ← 学習計画書（この資料の PDF）
+├── notes/           ← メモ
+│   ├── week01.md    ← 週ごとの振り返り
+│   └── prompts.md   ← うまくいった指示集
+└── projects/
+    ├── 01-hello-html/      ← 第1週
+    ├── 02-warikan/         ← 第2〜3週
+    ├── 04-profile-site/    ← 第4週
+    └── 05-portfolio-app/   ← 第5〜8週</code></pre>
+      <ul>
+        <li>フォルダ名は英数字とハイフンだけにする。日本語やスペースは、ツールや URL でトラブルの元になります</li>
+        <li>projects/ の中は週番号を付け、作った順に並ぶようにする</li>
+        <li>1 プロジェクト = 1 つの GitHub リポジトリにする。claude-learning 自体は Git 管理しない（メモが公開されるのを防ぐため）</li>
+        <li>2 回目以降は、作業するプロジェクトのフォルダを開いてセッションを始める。上の階層の CLAUDE.md も自動で読まれるので、共通ルールは claude-learning/CLAUDE.md に書く</li>
+        <li>振り返りは notes/week01.md のように週ごとに書き、うまくいった指示は notes/prompts.md に貯める。第8週の README と面接準備の材料になります</li>
+      </ul>
+<pre><code>ホームフォルダに claude-learning というフォルダを作り、次の構成にしてください。
+plan/、notes/、projects/ の3つのフォルダと、直下に CLAUDE.md を置きます。
+CLAUDE.md には「説明は日本語で初心者向けにする」と書いてください。
+作ったら、どんな構成になったか見せてください。</code></pre>
+
+      <h3>やること</h3>
+      <table>
+        <tr><th>やること</th><th class="done">完了</th></tr>
+        <tr><td>Claude デスクトップアプリをインストールしてログインする</td><td class="done"></td></tr>
+        <tr><td>上の構成で <code>claude-learning</code> フォルダを作り、<code>plan/</code> にこの学習計画書の PDF を入れる</td><td class="done"></td></tr>
+        <tr><td>画面の各部分を確認する（チャット欄、差分ペイン、ブラウザペイン、権限モードの切替）</td><td class="done"></td></tr>
+        <tr><td>権限確認のダイアログが出たら、<strong>何をしようとしているかを読んでから</strong> 許可する</td><td class="done"></td></tr>
+        <tr><td>Git と Node.js が入っているか Claude に確認してもらい、無ければインストール手順を案内してもらう</td><td class="done"></td></tr>
+        <tr><td><code>projects/01-hello-html</code> に簡単な HTML ページを作ってもらい、ブラウザペインで表示する</td><td class="done"></td></tr>
+        <tr><td>そのページのコードを 1 行ずつ説明してもらう</td><td class="done"></td></tr>
+      </table>
+
+      <h3>Claude への指示例</h3>
+<pre><code>このフォルダに、自己紹介を1段落だけ書いた index.html を作ってください。
+CSS は同じファイルの中に書き、背景を薄い青にしてください。
+作ったらブラウザで表示して確認してください。</code></pre>
+<pre><code>いま作った index.html を、プログラミング初心者にも分かるように
+上から順に説明してください。HTML タグの役割も教えてください。</code></pre>
+
+      <h3>振り返り</h3>
+      <ul>
+        <li>Claude が「許可」を求めてきたのはどんな操作でしたか？</li>
+        <li>自分で説明できない行はありましたか？</li>
+      </ul>
+    </section>
+
+    <!-- 第2週 -->
+    <section class="week">
+      <h2>第2週：基本操作と指示の出し方</h2>
+
+      <h3>学習目標</h3>
+      <ul>
+        <li>良い指示（目的・制約・完了条件）を書ける</li>
+        <li>差分を読んで、変更を受け入れるか判断できる</li>
+        <li>失敗したときにやり直せる</li>
+      </ul>
+
+      <h3>やること</h3>
+      <table>
+        <tr><th>やること</th><th class="done">完了</th></tr>
+        <tr><td><strong>Plan モード</strong> を使い、実装前に計画だけを出してもらう</td><td class="done"></td></tr>
+        <tr><td><code>@ファイル名</code> でファイルを指定して質問する</td><td class="done"></td></tr>
+        <tr><td>差分ペインで「何行消えて何行増えたか」を確認する</td><td class="done"></td></tr>
+        <tr><td>わざと気に入らない変更を頼み、元に戻す方法を試す</td><td class="done"></td></tr>
+        <tr><td>話題が変わったら <strong>新しいセッション</strong> を始める（会話が長くなると精度が落ちるため）</td><td class="done"></td></tr>
+        <tr><td><code>projects/02-warikan</code> に割り勘計算ツールを作る（人数と金額を入れると 1 人あたりの金額が出る）</td><td class="done"></td></tr>
+      </table>
+
+      <h3>良い指示の型</h3>
+<pre><code>【目的】飲み会の割り勘を計算する Web ページを作りたい
+【制約】HTML・CSS・JavaScript の 1 ファイルで。ライブラリは使わない
+【完了条件】金額と人数を入れてボタンを押すと、1 人あたりの金額が
+            100 円単位で切り上げて表示される。人数が 0 のときはエラー表示</code></pre>
+
+      <h3>振り返り</h3>
+      <ul>
+        <li>「目的・制約・完了条件」を書いた場合と書かなかった場合で、結果はどう違いましたか？</li>
+        <li>Plan モードで出た計画に、自分で修正を入れた点はありますか？</li>
+      </ul>
+    </section>
+
+    <!-- 第3週 -->
+    <section class="week">
+      <h2>第3週：GitHub 連携と CLAUDE.md</h2>
+
+      <h3>学習目標</h3>
+      <ul>
+        <li>Git の基本（コミット・ブランチ・プルリクエスト）の意味が分かる</li>
+        <li>CLAUDE.md で Claude に「このプロジェクトのルール」を伝えられる</li>
+      </ul>
+
+      <h3>やること</h3>
+      <table>
+        <tr><th>やること</th><th class="done">完了</th></tr>
+        <tr><td>GitHub アカウントを作成し、Claude に GitHub との連携設定を手伝ってもらう</td><td class="done"></td></tr>
+        <tr><td><code>01-hello-html</code> と <code>02-warikan</code> をそれぞれ GitHub の公開リポジトリにする（1 プロジェクト = 1 リポジトリ）</td><td class="done"></td></tr>
+        <tr><td>「コミット」「ブランチ」「プルリクエスト（PR）」を Claude に説明してもらう</td><td class="done"></td></tr>
+        <tr><td>新しいブランチで機能追加（例: 端数の扱いを選べる）→ PR を作成 → 内容を確認してマージ</td><td class="done"></td></tr>
+        <tr><td><code>/init</code> でプロジェクト用の CLAUDE.md を作る。全体共通のルールは <code>claude-learning/CLAUDE.md</code> に書き分ける</td><td class="done"></td></tr>
+        <tr><td>README.md（使い方・スクリーンショット）を書いてもらう</td><td class="done"></td></tr>
+      </table>
+
+      <h3>CLAUDE.md に書く例</h3>
+<pre><code># ルール
+- 説明は日本語で、初心者向けに書く
+- 変更したら、何を変えたかを 3 行でまとめる
+- コミットメッセージは日本語で「何をしたか」を書く</code></pre>
+
+      <h3>振り返り</h3>
+      <ul>
+        <li>コミットを細かく分けると、後で何が嬉しいでしょうか？</li>
+        <li>CLAUDE.md を書く前と後で、Claude の返答は変わりましたか？</li>
+      </ul>
+    </section>
+
+    <!-- 第4週 -->
+    <section class="week">
+      <h2>第4週：Web アプリの基礎と公開</h2>
+
+      <h3>学習目標</h3>
+      <ul>
+        <li>Next.js（React ベースの Web フレームワーク）で簡単なサイトを作れる</li>
+        <li>エラーが出たときに Claude と一緒に原因を調べられる</li>
+        <li>Vercel でサイトを公開できる</li>
+      </ul>
+
+      <h3>やること</h3>
+      <table>
+        <tr><th>やること</th><th class="done">完了</th></tr>
+        <tr><td>Next.js の新規プロジェクトを作ってもらい、フォルダ構成を説明してもらう</td><td class="done"></td></tr>
+        <tr><td>開発サーバーを起動してブラウザペインで表示する</td><td class="done"></td></tr>
+        <tr><td><code>projects/04-profile-site</code> に自己紹介サイト（プロフィール・好きなこと・作ったもの一覧）を作る</td><td class="done"></td></tr>
+        <tr><td>わざとエラーを起こし、エラー文を Claude に見せて直す流れを体験する</td><td class="done"></td></tr>
+        <tr><td>スマホ幅で表示が崩れないか確認する</td><td class="done"></td></tr>
+        <tr><td><code>04-profile-site</code> を GitHub の公開リポジトリにし、Vercel アカウントを作って連携・公開する</td><td class="done"></td></tr>
+      </table>
+
+      <h3>Claude への指示例</h3>
+<pre><code>Next.js で自己紹介サイトを作ります。
+まず Plan モードで、ページ構成とファイル構成を提案してください。
+私は React を少ししか知らないので、各ファイルの役割も書いてください。</code></pre>
+
+      <h3>振り返り</h3>
+      <ul>
+        <li>公開した URL を友人に見せて、気づいた点をもらいましたか？</li>
+        <li>エラーの原因を、自分の言葉で説明できますか？</li>
+      </ul>
+    </section>
+
+    <!-- 第5週 -->
+    <section class="week">
+      <h2>第5週：ポートフォリオアプリの企画・設計</h2>
+
+      <h3>学習目標</h3>
+      <ul>
+        <li>「誰の・どんな困りごとを・どう解決するか」を言葉にできる</li>
+        <li>作る前に仕様書を書く習慣をつける</li>
+      </ul>
+
+      <h3>やること</h3>
+      <table>
+        <tr><th>やること</th><th class="done">完了</th></tr>
+        <tr><td>題材を決める（付録「アプリ題材アイデア」参照）。<strong>自分や身近な人が実際に困っていること</strong> が一番強い</td><td class="done"></td></tr>
+        <tr><td>Claude と壁打ちして、機能を「必須」「あれば嬉しい」に分ける</td><td class="done"></td></tr>
+        <tr><td>仕様書 <code>docs/spec.md</code> を <code>projects/05-portfolio-app</code> に Claude と一緒に書く</td><td class="done"></td></tr>
+        <tr><td>画面一覧と画面ラフ（手書き写真でも OK）を用意する</td><td class="done"></td></tr>
+        <tr><td>保存するデータ（例: 予定、メモ、ユーザー）を整理する</td><td class="done"></td></tr>
+        <tr><td><code>05-portfolio-app</code> を GitHub の公開リポジトリにして仕様書を push する。第6・7週でやることは小さなタスクに分けて Issue にする</td><td class="done"></td></tr>
+      </table>
+
+      <h3>仕様書に書く項目</h3>
+<pre><code># アプリ名
+## 解決したい課題（誰が・何に困っているか）
+## 主な機能（必須 / あれば嬉しい）
+## 画面一覧
+## 扱うデータ
+## 使う技術（Next.js / Supabase / Vercel など）
+## やらないこと（スコープ外）</code></pre>
+
+      <h3>振り返り</h3>
+      <ul>
+        <li>必須機能は 3〜5 個に絞れましたか？（多すぎると完成しません）</li>
+        <li>「やらないこと」を決めましたか？</li>
+      </ul>
+    </section>
+
+    <!-- 第6週 -->
+    <section class="week">
+      <h2>第6週：実装①（主要機能）</h2>
+
+      <h3>学習目標</h3>
+      <ul>
+        <li>「小さく実装 → 確認 → コミット」のサイクルを回せる</li>
+        <li>データベースにデータを保存・表示できる</li>
+      </ul>
+
+      <h3>やること</h3>
+      <table>
+        <tr><th>やること</th><th class="done">完了</th></tr>
+        <tr><td>Issue を 1 つずつ選び、ブランチを切って実装する</td><td class="done"></td></tr>
+        <tr><td>1 機能ごとにブラウザペインで動作確認し、コミット・PR にする</td><td class="done"></td></tr>
+        <tr><td>データベース（例: Supabase）を使い、データの保存・一覧・削除を作る</td><td class="done"></td></tr>
+        <tr><td>ログイン機能は <strong>任意</strong>（難しければ後回しで OK）</td><td class="done"></td></tr>
+        <tr><td>API キーなどの秘密情報を <code>.env</code> に入れ、<strong>GitHub に上げないこと</strong> を Claude に確認する</td><td class="done"></td></tr>
+        <tr><td>週末に Vercel へ公開して、スマホでも触ってみる</td><td class="done"></td></tr>
+      </table>
+
+      <h3>Claude への指示例</h3>
+<pre><code>docs/spec.md の「予定の登録」機能だけを実装してください。
+他の機能には触れないでください。
+実装後はブラウザで、予定を 1 件登録して一覧に表示されるところまで確認してください。</code></pre>
+
+      <h3>振り返り</h3>
+      <ul>
+        <li>1 回の指示が大きすぎて、うまくいかなかったことはありますか？</li>
+        <li>秘密情報がコミットに入っていないか確認しましたか？</li>
+      </ul>
+    </section>
+
+    <!-- 第7週 -->
+    <section class="week">
+      <h2>第7週：実装②（品質を上げる）</h2>
+
+      <h3>学習目標</h3>
+      <ul>
+        <li>テスト・レビューで品質を確かめられる</li>
+        <li>使う人の目線で改善できる</li>
+      </ul>
+
+      <h3>やること</h3>
+      <table>
+        <tr><th>やること</th><th class="done">完了</th></tr>
+        <tr><td>残りの必須機能を仕上げる</td><td class="done"></td></tr>
+        <tr><td>主要な処理にテストを書いてもらい、何を確かめるテストか説明してもらう</td><td class="done"></td></tr>
+        <tr><td><code>/code-review</code> でレビューしてもらい、指摘を 1 つずつ判断して直す（全部そのまま直さない）</td><td class="done"></td></tr>
+        <tr><td>入力ミス・通信失敗時のエラー表示を整える</td><td class="done"></td></tr>
+        <tr><td>スマホ表示・読み込み速度を確認する</td><td class="done"></td></tr>
+        <tr><td>友人 1〜2 人に使ってもらい、改善点を 1 つ反映する</td><td class="done"></td></tr>
+        <tr><td><strong>発展</strong>: よく使う指示を「スキル」にまとめる／MCP コネクタで外部サービスと連携してみる</td><td class="done"></td></tr>
+      </table>
+
+      <h3>振り返り</h3>
+      <ul>
+        <li>レビュー指摘のうち、直さなかったものとその理由は？</li>
+        <li>使ってもらって一番意外だった反応は？</li>
+      </ul>
+    </section>
+
+    <!-- 第8週 -->
+    <section class="week">
+      <h2>第8週：仕上げと応募準備</h2>
+
+      <h3>学習目標</h3>
+      <ul>
+        <li>採用担当者が 3 分で理解できる形に成果物を整える</li>
+        <li>AI を使った開発について、自分の判断を語れる</li>
+      </ul>
+
+      <h3>やること</h3>
+      <table>
+        <tr><th>やること</th><th class="done">完了</th></tr>
+        <tr><td>README を整える（下のテンプレート参照）</td><td class="done"></td></tr>
+        <tr><td>スクリーンショットや短いデモ動画を README に載せる</td><td class="done"></td></tr>
+        <tr><td>GitHub のプロフィール README を書き、<code>05-portfolio-app</code> をピン留めする</td><td class="done"></td></tr>
+        <tr><td>開発の振り返り記事を書く（Zenn・Qiita・note など）</td><td class="done"></td></tr>
+        <tr><td>エントリーシート・面接用に「話すこと」をまとめる</td><td class="done"></td></tr>
+        <tr><td>応募したいインターンを 3 社以上リストアップし、応募する</td><td class="done"></td></tr>
+      </table>
+
+      <h3>README テンプレート</h3>
+<pre><code># アプリ名
+公開URL: https://...
+
+## 作った理由（どんな課題を解決するか）
+## 主な機能（スクリーンショット付き）
+## 使用技術
+## 工夫したこと・苦労したこと
+## Claude Code の使い方（自分が判断したこと / AI に任せたこと）
+## 今後やりたいこと</code></pre>
+
+      <h3>面接で聞かれそうなこと</h3>
+      <ul>
+        <li>なぜこのアプリを作ったのですか？</li>
+        <li>AI が書いたコードを、どうやって正しいと確かめましたか？</li>
+        <li>AI の提案を採用しなかった場面はありますか？</li>
+        <li>一番難しかったバグと、その解決方法は？</li>
+        <li>もう一度作るとしたら、何を変えますか？</li>
+      </ul>
+
+      <p class="point">ポイント: 「AI に作らせました」ではなく、<strong>「課題を定義し、仕様を決め、AI の出力を検証して取捨選択した」</strong> と語れることが評価につながります。</p>
+    </section>
+  </main>
+</body>
+</html>
